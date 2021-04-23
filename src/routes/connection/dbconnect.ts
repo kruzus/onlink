@@ -8,6 +8,8 @@ import {Pool} from "pg"
 // dotenv.config()
 
 
+
+//CHANGE THIS TO .ENV IN PROD
 export const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -15,5 +17,6 @@ export const pool = new Pool({
   password: 'skoozle',
   port: 5432,
 })
+
 
 

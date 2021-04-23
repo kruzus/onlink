@@ -1,23 +1,27 @@
-import express, { Application, Request, Response } from "express"
+import express, { Application} from "express"
 
-import {pool} from "../connection/dbconnect";
-
+//more work...
+import helmet from "helmet"
+import bodyParser = require("body-parser")
+import morgan from "morgan"
+import cors from "cors"
+import compression from "compression"
+require('dotenv').config()
+const PORT = process.env.DB_SERVERPORT || 6969;
+import {pool} from "../routes/connection/dbconnect";
+import {router} from "../routes/"
 
 const app: Application = express();
 
-app.get('/', (req: Request, res: Response) => {
-    res.setHeader('Content-Type', 'application/json')
-    pool.query('SELECT * FROM accounts',  (err, query) => {
-        const data = query.rows;
-        
-        res.json(data)
-
-        pool.end()
-      })
-})
+// app.use(compression())
+app.use(helmet())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+app.use(cors())
+app.use(bodyParser.json());
+app.use(router)
 
 
 
-app.listen(5000, ():void => {
-    console.log("Server is live boys")
+app.listen(PORT, (): void => {
+    console.log(`Server Live at: ${PORT}`)
 })
