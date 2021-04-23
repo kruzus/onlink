@@ -1,0 +1,3 @@
+# Read me ya...
+
+So do this and boom we have rest api.
